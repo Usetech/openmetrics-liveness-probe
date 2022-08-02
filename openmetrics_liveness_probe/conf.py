@@ -4,7 +4,7 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
     HOST: str = "0.0.0.0"
     PORT: int = 8000
-    SERVICE_NAME: str
+    SERVICE_NAME: str = "example"
     METRIC_NAME: str = "liveness_probe_unixtime"
     ENABLE_DEFAULT_PROMETHEUS_METRICS: bool = False
 
