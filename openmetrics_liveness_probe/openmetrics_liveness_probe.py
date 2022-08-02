@@ -11,6 +11,10 @@ CONSUMER_LIVENESS_PROBE_UNIXTIME = prometheus_client.Gauge(
 
 
 def start_metrics_server(host=settings.HOST, port=settings.PORT):
+    if not settings.ENABLE_DEFAULT_PROMETHEUS_METRICS:
+        prometheus_client.REGISTRY.unregister(prometheus_client.PROCESS_COLLECTOR)
+        prometheus_client.REGISTRY.unregister(prometheus_client.PLATFORM_COLLECTOR)
+        prometheus_client.REGISTRY.unregister(prometheus_client.GC_COLLECTOR)
     prometheus_client.start_http_server(addr=host, port=port)
 
 
