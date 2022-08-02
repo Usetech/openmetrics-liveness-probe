@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "openmetrics-liveness-probe"
+version = "0.1.0"
+description = ""
+authors = ["Daniil Nikitin <dnikitin@usetech.ru>"]
+license = "MIT"
+packages = [
+    { include = "openmetrics_liveness_probe" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+prometheus-client = "^0.14.1"
+pydantic = "^1.9.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "=6.2.4"
+tomlkit = "=0.11.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
