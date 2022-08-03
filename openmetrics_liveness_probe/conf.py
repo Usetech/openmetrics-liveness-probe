@@ -2,6 +2,7 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
+    ENABLED: bool = True
     HOST: str = "0.0.0.0"
     PORT: int = 8000
     SERVICE_NAME: str = "example"

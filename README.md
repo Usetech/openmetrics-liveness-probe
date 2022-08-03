@@ -12,6 +12,7 @@ liveness_probe_unixtime{service="test"} 1.659455742252334e+09
 
 Для начала необходимо объявить переменные окружения:
 ```
+OPENMETRICS_LIVENESS_PROBE_ENABLED=True
 OPENMETRICS_LIVENESS_PROBE_HOST=0.0.0.0
 OPENMETRICS_LIVENESS_PROBE_PORT=8000
 OPENMETRICS_LIVENESS_PROBE_SERVICE_NAME=example

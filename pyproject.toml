@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openmetrics-liveness-probe"
-version = "0.1.2"
+version = "0.1.3"
 description = ""
 authors = ["Daniil Nikitin <dnikitin@usetech.ru>"]
 license = "MIT"
