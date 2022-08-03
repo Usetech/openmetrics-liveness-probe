@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openmetrics-liveness-probe"
-version = "0.1.4"
+version = "0.1.5"
 description = ""
 authors = ["Daniil Nikitin <dnikitin@usetech.ru>"]
 license = "MIT"
@@ -10,7 +10,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.6.1, <4"
-prometheus-client = ">=0.9, <=0.14"
+prometheus-client = ">=0.9"
 pydantic = "^1.8"
 
 [tool.poetry.dev-dependencies]

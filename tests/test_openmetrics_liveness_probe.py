@@ -2,4 +2,4 @@ from openmetrics_liveness_probe import __version__
 
 
 def test_version():
-    assert __version__ == "0.1.4"
+    assert __version__ == "0.1.5"
