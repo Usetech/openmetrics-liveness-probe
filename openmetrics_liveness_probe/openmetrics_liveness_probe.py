@@ -14,17 +14,19 @@ def start_metrics_server(host=settings.HOST, port=settings.PORT):
     if not settings.ENABLED:
         return
 
-    if not settings.PROMETHEUS_MULTIPROC_DIR:
-        if not settings.ENABLE_DEFAULT_PROMETHEUS_METRICS:
-            prometheus_client.REGISTRY.unregister(prometheus_client.PROCESS_COLLECTOR)
-            prometheus_client.REGISTRY.unregister(prometheus_client.PLATFORM_COLLECTOR)
-            prometheus_client.REGISTRY.unregister(prometheus_client.GC_COLLECTOR)
-        prometheus_client.start_http_server(addr=host, port=port)
 
-    else:
+    if not settings.ENABLE_DEFAULT_PROMETHEUS_METRICS:
+        prometheus_client.REGISTRY.unregister(prometheus_client.PROCESS_COLLECTOR)
+        prometheus_client.REGISTRY.unregister(prometheus_client.PLATFORM_COLLECTOR)
+        prometheus_client.REGISTRY.unregister(prometheus_client.GC_COLLECTOR)
+        
+    if settings.PROMETHEUS_MULTIPROC_DIR:
         registry = prometheus_client.CollectorRegistry()
         MultiProcessCollector(registry=registry)
-        prometheus_client.start_http_server(addr=host, port=port, registry=registry)
+
+    registry = registry if settings.PROMETHEUS_MULTIPROC_DIR else prometheus_client.REGISTRY
+    
+    prometheus_client.start_http_server(addr=host, port=port, registry=registry)
 
 
 def liveness_probe():
