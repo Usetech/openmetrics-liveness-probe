@@ -14,7 +14,8 @@ def start_metrics_server(host=settings.HOST, port=settings.PORT):
     if not settings.ENABLED:
         return
 
-
+    registry = prometheus_client.REGISTRY
+    
     if not settings.ENABLE_DEFAULT_PROMETHEUS_METRICS:
         prometheus_client.REGISTRY.unregister(prometheus_client.PROCESS_COLLECTOR)
         prometheus_client.REGISTRY.unregister(prometheus_client.PLATFORM_COLLECTOR)
@@ -23,8 +24,6 @@ def start_metrics_server(host=settings.HOST, port=settings.PORT):
     if settings.PROMETHEUS_MULTIPROC_DIR:
         registry = prometheus_client.CollectorRegistry()
         MultiProcessCollector(registry=registry)
-
-    registry = registry if settings.PROMETHEUS_MULTIPROC_DIR else prometheus_client.REGISTRY
     
     prometheus_client.start_http_server(addr=host, port=port, registry=registry)
 
