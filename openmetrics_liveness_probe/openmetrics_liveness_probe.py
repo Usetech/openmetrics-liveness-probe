@@ -10,25 +10,25 @@ CONSUMER_LIVENESS_PROBE_UNIXTIME = prometheus_client.Gauge(
 )
 
 
-def start_metrics_server(host=settings.HOST, port=settings.PORT):
+def start_metrics_server(host: str = settings.HOST, port: int = settings.PORT) -> None:
     if not settings.ENABLED:
         return
 
     registry = prometheus_client.REGISTRY
-    
+
     if not settings.ENABLE_DEFAULT_PROMETHEUS_METRICS:
         prometheus_client.REGISTRY.unregister(prometheus_client.PROCESS_COLLECTOR)
         prometheus_client.REGISTRY.unregister(prometheus_client.PLATFORM_COLLECTOR)
         prometheus_client.REGISTRY.unregister(prometheus_client.GC_COLLECTOR)
-        
+
     if settings.PROMETHEUS_MULTIPROC_DIR:
         registry = prometheus_client.CollectorRegistry()
         MultiProcessCollector(registry=registry)
-    
+
     prometheus_client.start_http_server(addr=host, port=port, registry=registry)
 
 
-def liveness_probe():
+def liveness_probe() -> None:
     if not settings.ENABLED:
         return
 

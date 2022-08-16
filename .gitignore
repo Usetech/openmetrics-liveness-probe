@@ -38,3 +38,10 @@ venv.bak/
 # IDE
 .idea/
 .vscode/
+
+# Tests, linters / coverage reports
+.tox/
+.coverage
+.coverage.*
+.mypy_cache/
+.pytest_cache/

@@ -9,13 +9,19 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.6.1, <4"
+python = ">=3.6.3, <4"
 prometheus-client = ">=0.9"
 pydantic = "^1.8"
 
 [tool.poetry.dev-dependencies]
 pytest = "=6.2.4"
 tomlkit = "=0.11.1"
+tox = "^3.25.1"
+flake8 = "^5.0.4"
+isort = "^5.10.1"
+black = "^22.6.0"
+mypy = "^0.971"
+pytest-cov = "^3.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
