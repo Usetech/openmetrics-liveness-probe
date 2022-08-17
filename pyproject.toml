@@ -22,6 +22,8 @@ isort = "^5.10.1"
 black = "^22.6.0"
 mypy = "^0.971"
 pytest-cov = "^3.0.0"
+requests = "2.27.0"
+types-requests = "2.27.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
