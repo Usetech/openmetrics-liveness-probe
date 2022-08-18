@@ -11,6 +11,14 @@ CONSUMER_LIVENESS_PROBE_UNIXTIME = prometheus_client.Gauge(
 
 
 def start_metrics_server(host: str = settings.HOST, port: int = settings.PORT) -> None:
+    """Starts the metrics server from prometheus_client at http://{{host}}:{{port}}.
+       The server starts multiprocess mode, if value of environment variable
+       PROMETHEUS_MULTIPROC_DIR is not None.
+
+    Args:
+        host (str, optional): IP address. Defaults to settings.HOST.
+        port (int, optional): Port number. Defaults to settings.PORT.
+    """
     if not settings.ENABLED:
         return
 
@@ -29,6 +37,7 @@ def start_metrics_server(host: str = settings.HOST, port: int = settings.PORT) -
 
 
 def liveness_probe() -> None:
+    """Sets the liveness probe metric to the metrics server."""
     if not settings.ENABLED:
         return
 

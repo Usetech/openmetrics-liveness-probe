@@ -22,6 +22,7 @@ def test_start_multiprocess_mode_metrics_server(
 ) -> None:
     response = requests.get(url=f"http://{settings.HOST}:{settings.PORT + 1}")
     response.raise_for_status()
+    liveness_probe()
     assert response.status_code == requests.status_codes.codes.ok
     assert "Multiprocess metric" in response.text
 
