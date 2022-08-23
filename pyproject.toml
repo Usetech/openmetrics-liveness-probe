@@ -24,6 +24,7 @@ mypy = "^0.971"
 pytest-cov = "^3.0.0"
 requests = "2.27.0"
 types-requests = "2.27.0"
+requests-mock = "^1.9.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

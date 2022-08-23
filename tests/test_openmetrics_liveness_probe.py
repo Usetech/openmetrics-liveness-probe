@@ -1,42 +1,28 @@
-from typing import Callable
+from typing import Any, Callable
 
-import pytest
 import requests
+from requests.status_codes import codes
 
-from openmetrics_liveness_probe import __version__, liveness_probe, settings
+from openmetrics_liveness_probe import __version__
 
 
 def test_version() -> None:
     assert __version__ == "0.1.6"
 
 
-def test_start_metrics_server(launch_metrics_server: Callable) -> None:
-    response = requests.get(url=f"http://{settings.HOST}:{settings.PORT}")
-    response.raise_for_status()
-    assert response.status_code == requests.status_codes.codes.ok
-    assert "Unixtime последней liveness probe" in response.text
-
-
-def test_start_multiprocess_mode_metrics_server(
-    launch_multiprocess_mode_metrics_server: Callable,
+def test_start_metrics_server(
+    mock_metrics_server: Callable, get_attrs_for_mock_metrics_server: Any
 ) -> None:
-    response = requests.get(url=f"http://{settings.HOST}:{settings.PORT + 1}")
-    response.raise_for_status()
-    liveness_probe()
-    assert response.status_code == requests.status_codes.codes.ok
-    assert "Multiprocess metric" in response.text
-
-
-@pytest.mark.parametrize(
-    "url",
-    [
-        f"http://{settings.HOST}:{settings.PORT}",
-        f"http://{settings.HOST}:{settings.PORT + 1}",
-    ],
-)
-def test_liveness_probe(url: str) -> None:
-    liveness_probe()
+    url, text = get_attrs_for_mock_metrics_server
     response = requests.get(url=url)
     response.raise_for_status()
-    _probe = response.text.split("\n")[2]
-    assert _probe.split(" ")[1] != " "
+    assert response.text == text
+    assert response.status_code == codes.ok
+
+
+def test_liveness_probe(
+    get_liveness_probe_metric: Any, get_liveness_probe_metric_value: Any
+) -> None:
+    assert (
+        get_liveness_probe_metric[0].samples[0].value == get_liveness_probe_metric_value
+    )
