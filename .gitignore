@@ -45,3 +45,6 @@ venv.bak/
 .coverage.*
 .mypy_cache/
 .pytest_cache/
+
+# GitHub Actions
+!.github/

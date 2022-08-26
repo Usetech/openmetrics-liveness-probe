@@ -1,7 +1,17 @@
+import os
 from typing import Any, Iterable, Tuple
 
 import pytest
-from prometheus_client import Metric
+from prometheus_client import (
+    GC_COLLECTOR,
+    PLATFORM_COLLECTOR,
+    PROCESS_COLLECTOR,
+    REGISTRY,
+    CollectorRegistry,
+    Metric,
+)
+from prometheus_client.exposition import generate_latest
+from prometheus_client.multiprocess import MultiProcessCollector
 from prometheus_client.openmetrics import parser
 from requests.status_codes import codes
 
@@ -14,15 +24,21 @@ from openmetrics_liveness_probe.openmetrics_liveness_probe import (
 @pytest.fixture(params=["single", "multiprocess"])
 def get_attrs_for_mock_metrics_server(request) -> Tuple[str, str]:
     if request.param == "single":
+        try:
+            REGISTRY.unregister(PROCESS_COLLECTOR)
+            REGISTRY.unregister(PLATFORM_COLLECTOR)
+            REGISTRY.unregister(GC_COLLECTOR)
+        except KeyError:
+            pass
         url = f"http://{settings.HOST}:{settings.PORT}"
-        text = """# HELP liveness_probe_unixtime Unixtime последней liveness probe \
-            # TYPE liveness_probe_unixtime gauge \n# EOF\n"""
-    if request.param == "multiprocess":
-        url = f"http://{settings.HOST}:{settings.PORT + 1}"
-        text = """# HELP liveness_probe_unixtime Multiprocess metric# TYPE \
-            liveness_probe_unixtime gauge \n# EOF\n"""
 
-    return url, f"{list(parser.text_string_to_metric_families(text))[0]}"
+    if request.param == "multiprocess":
+        os.environ.setdefault("PROMETHEUS_MULTIPROC_DIR", "/tmp")
+        registry = CollectorRegistry()
+        MultiProcessCollector(registry=registry)
+        url = f"http://{settings.HOST}:{settings.PORT + 1}"
+
+    return url, generate_latest().decode("utf-8")
 
 
 @pytest.fixture(params=["single", "multiprocess"])
@@ -38,13 +54,19 @@ def mock_metrics_server(
 
 
 @pytest.fixture
-def get_liveness_probe_metric() -> Iterable[Metric]:
+def get_liveness_probe_metric_enabled() -> Iterable[Metric]:
     liveness_probe()
     return CONSUMER_LIVENESS_PROBE_UNIXTIME.collect()
 
 
 @pytest.fixture
-def get_liveness_probe_metric_value(
-    get_liveness_probe_metric: Iterable[Metric],
-) -> float:
-    return get_liveness_probe_metric[0].samples[0].value  # type: ignore
+def get_liveness_probe_metric_disabled() -> Iterable[Metric]:
+    settings.ENABLED = False
+    liveness_probe()
+    return CONSUMER_LIVENESS_PROBE_UNIXTIME.collect()
+
+
+@pytest.fixture
+def get_liveness_probe_metric_from_prometheus_client() -> Iterable[Metric]:
+    text = f"{generate_latest().decode('utf-8')}# EOF"
+    return list(parser.text_string_to_metric_families(text))
