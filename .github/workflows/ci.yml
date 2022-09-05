@@ -1,4 +1,4 @@
-name: CI Pipeline for openmetrics_liveness_probe
+name: CI
 
 on:
   - push
