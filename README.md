@@ -1,3 +1,6 @@
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/openmetrics-liveness-probe.svg)](https://pypi.python.org/pypi/openmetrics-liveness-probe/) [![PyPI license](https://img.shields.io/pypi/l/openmetrics-liveness-probe.svg)](https://pypi.python.org/pypi/openmetrics-liveness-probe/) [![PyPI version fury.io](https://badge.fury.io/py/openmetrics-liveness-probe.svg)](https://pypi.python.org/pypi/openmetrics-liveness-probe/) [![build](https://github.com/Usetech/openmetrics-liveness-probe/actions/workflows/ci.yml/badge.svg)](https://github.com/Usetech/openmetrics-liveness-probe/actions/workflows/ci.yml?branch=main)
+
+
 openmetrics-liveness-probe
 ============
 
