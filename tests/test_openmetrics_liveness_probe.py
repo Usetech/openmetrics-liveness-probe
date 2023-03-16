@@ -11,7 +11,7 @@ from openmetrics_liveness_probe.openmetrics_liveness_probe import (
 
 
 def test_version() -> None:
-    assert __version__ == "0.1.7"
+    assert __version__ == "0.1.8"
 
 
 def test_type_of_consumer_liveness_probe_unixtime() -> None:
