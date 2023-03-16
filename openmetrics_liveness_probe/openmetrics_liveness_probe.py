@@ -6,7 +6,7 @@ from prometheus_client.multiprocess import MultiProcessCollector
 from .conf import settings
 
 CONSUMER_LIVENESS_PROBE_UNIXTIME = prometheus_client.Gauge(
-    settings.METRIC_NAME, "Unixtime последней liveness probe", ["service"]
+    settings.METRIC_NAME, "Unixtime последней liveness probe", ["service", "version"]
 )
 
 
@@ -36,9 +36,9 @@ def start_metrics_server(host: str = settings.HOST, port: int = settings.PORT) -
     prometheus_client.start_http_server(addr=host, port=port, registry=registry)
 
 
-def liveness_probe() -> None:
+def liveness_probe(version="undefined") -> None:
     """Sets the liveness probe metric to the metrics server."""
     if not settings.ENABLED:
         return
 
-    CONSUMER_LIVENESS_PROBE_UNIXTIME.labels(service=settings.SERVICE_NAME).set(time())
+    CONSUMER_LIVENESS_PROBE_UNIXTIME.labels(service=settings.SERVICE_NAME, version=version).set(time())

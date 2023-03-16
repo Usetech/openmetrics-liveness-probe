@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openmetrics-liveness-probe"
-version = "0.1.7"
+version = "0.1.8"
 description = "Library for getting the time when the service was last considered alive."
 authors = ["Daniil Nikitin <dnikitin@usetech.ru>"]
 keywords = ["openmetrics", "liveness_probe"]
