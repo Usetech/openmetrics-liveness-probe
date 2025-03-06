@@ -1,6 +1,11 @@
 from typing import Optional
 
-from pydantic import BaseSettings
+from pydantic import __version__ as __pydantic_version__
+
+if __pydantic_version__[0] == "2":
+    from pydantic.v1 import BaseSettings
+else:
+    from pydantic import BaseSettings  # type: ignore
 
 
 class Settings(BaseSettings):

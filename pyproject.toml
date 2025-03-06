@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openmetrics-liveness-probe"
-version = "0.1.8"
+version = "0.2.0"
 description = "Library for getting the time when the service was last considered alive."
 authors = ["Daniil Nikitin <dnikitin@usetech.ru>"]
 keywords = ["openmetrics", "liveness_probe"]
@@ -13,23 +13,22 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.6.1, <4"
+python = ">=3.8, <4"
 prometheus-client = ">=0.9"
-pydantic = "^1.8"
+pydantic = "^1.8 || ^2.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "=6.2.4"
-tomlkit = "=0.11.1"
-tox = "^3.25.1"
+pytest = "^8.3.5"
+tomlkit = "^0.13.2"
+tox = "^4.24"
 flake8 = "^5.0.4"
 isort = "^5.10.1"
-mypy = "^0.971"
-pytest-cov = "^3.0.0"
-requests = "2.27.0"
-types-requests = "2.27.0"
-requests-mock = "^1.9.3"
-tox-poetry-installer = "^0.8.4"
-tox-gh-actions = "^2.9.1"
+mypy = "^1.14.1"
+pytest-cov = "^5.0.0"
+requests = "2.32.3"
+types-requests = "2.32.0.20241016"
+requests-mock = "^1.12.1"
+tox-gh-actions = "^3.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
