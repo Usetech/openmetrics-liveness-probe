@@ -41,4 +41,6 @@ def liveness_probe(version="undefined") -> None:
     if not settings.ENABLED:
         return
 
-    CONSUMER_LIVENESS_PROBE_UNIXTIME.labels(service=settings.SERVICE_NAME, version=version).set(time())
+    CONSUMER_LIVENESS_PROBE_UNIXTIME.labels(
+        service=settings.SERVICE_NAME, version=version
+    ).set(time())

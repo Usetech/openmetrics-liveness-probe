@@ -48,3 +48,4 @@ venv.bak/
 
 # GitHub Actions
 !.github/
+/poetry.lock
