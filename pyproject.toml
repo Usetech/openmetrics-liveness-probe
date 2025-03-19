@@ -1,23 +1,24 @@
-[tool.poetry]
+[project]
 name = "openmetrics-liveness-probe"
-version = "0.2.0"
+version = "0.2.6"
 description = "Library for getting the time when the service was last considered alive."
-authors = ["Daniil Nikitin <dnikitin@usetech.ru>"]
+authors = [
+    {name = "Daniil Nikitin",email = "dnikitin@usetech.ru"}
+]
 keywords = ["openmetrics", "liveness_probe"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/Usetech/openmetrics-liveness-probe"
-repository = "https://github.com/Usetech/openmetrics-liveness-probe"
-packages = [
-    { include = "openmetrics_liveness_probe" }
+requires-python = ">=3.8, <4"
+dependencies = [
+    "prometheus-client (>=0.9)",
+    "pydantic (>=1.8.0,<3.0.0)"
 ]
 
-[tool.poetry.dependencies]
-python = ">=3.8, <4"
-prometheus-client = ">=0.9"
-pydantic = "^1.8 || ^2.0"
+[project.urls]
+Homepage = "https://github.com/Usetech/openmetrics-liveness-probe"
+Repository = "https://github.com/Usetech/openmetrics-liveness-probe"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"
 tomlkit = "^0.13.2"
 tox = "^4.24"
